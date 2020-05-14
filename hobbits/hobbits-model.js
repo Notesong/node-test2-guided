@@ -1,29 +1,29 @@
-const db = require("../data/config")
+const db = require("../data/config");
 
 async function create(data) {
-	return null
+  return null;
 }
 
 async function update(id, data) {
-	return null
+  return null;
 }
 
 function remove(id) {
-	return null
+  return null;
 }
 
 function find() {
-	return db("hobbits")
+  return db("hobbits");
 }
 
 function findById(id) {
-	return null
+  return db("hobbits").where({ id }).first();
 }
 
 module.exports = {
-	create,
-	update,
-	remove,
-	find,
-	findById,
-}
+  create,
+  update,
+  remove,
+  find,
+  findById,
+};
