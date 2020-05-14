@@ -4,6 +4,10 @@ const supertest = require("supertest");
 const server = require("../index");
 const db = require("../data/config");
 
+// reseeds the database before each run of tests
+beforeEach(async () => {
+  await db.seed.run();
+});
 // closes database connection when testing ends
 afterAll(async () => {
   await db.destroy();
@@ -23,5 +27,18 @@ describe("hobbits integration tests", () => {
     expect(res.statusCode).toBe(200);
     expect(res.type).toBe("application/json");
     expect(res.body.name).toBe("frodo");
+  });
+
+  it("GET /hobbits/id", async () => {
+    const res = await supertest(server).get("/hobbits/50");
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("POST /hobbits", async () => {
+    const data = { name: "bilbo" };
+    const res = await supertest(server).post("/hobbits").send(data);
+    expect(res.statusCode).toBe(201);
+    expect(res.type).toBe("application/json");
+    expect(res.body.name).toBe("bilbo");
   });
 });
